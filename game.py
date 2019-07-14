@@ -62,17 +62,21 @@ gameIsOver = False
 while (gameIsOver == False):
 	choice1 = int(input("Choose the next paper to eliminate: "))
 	while availablePapers[choice1] == False:
-		choice1 = int(input("Choose the next paper to eliminate: "))
+		choice1 = int(input("Sorry, that paper was already eliminated. Please choose another: "))
 	availablePapers[choice1] = False 
 	originalPapers.remove(shufflePapers[choice1 - 1])
 
 	choice2 = int(input("Choose the next paper to eliminate: "))
+	while availablePapers[choice2] == False:
+		choice2 = int(input("Sorry, that paper was already eliminated. Please choose another: "))
 	availablePapers[choice2] = False 
 	originalPapers.remove(shufflePapers[choice2 - 1])
 
 	teacherOffer = callTeacher()
 	print("Hang On. The teacher wants to offer you " + str(teacherOffer))
 	choice3 = input("So.....Grade or No Grade: ")
+	while (choice3 != 'grade') or (choice3 != 'Grade') or (choice3 != 'no grade') or (choice3 != 'No Grade') or (choice3 != 'No grade'):
+		choice3 = input("Sorry I didn't understand that.....Grade or No Grade: ")
 	gameIsOver = checkIfAccept(choice3)
 
 print("Congrats, you won " + str(teacherOffer)) 
