@@ -63,10 +63,6 @@ while (firstSelection.isnumeric() == False) or (int(firstSelection) < 1) or (int
 firstSelection = int(firstSelection)
 availablePapers[firstSelection] = False
 personalCase = shufflePapers[firstSelection - 1]
-	
-#print(firstSelection) 
-
-#print(originalPapers)
 
 
 #2) Loop the program where it eliminates 2 grades at a time and then checks with "teacher"
