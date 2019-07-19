@@ -65,60 +65,59 @@ availablePapers[firstSelection] = False
 personalCase = shufflePapers[firstSelection - 1]
 
 
+def getUsersChoice(choice):
+	while (choice.isnumeric() == False) or (int(choice) > 11) or (int(choice) < 1) or (availablePapers[int(choice)] == False):
+		if (choice.isnumeric() == False) or (int(choice) > 11) or (int(choice) < 1):
+			choice = input("Sorry, that's not a valid response. Please choose another: ")
+		elif (availablePapers[int(choice)] == False):
+			choice = input("Sorry, that paper was already eliminated. Please choose another: ")
+	choice = int(choice)
+	availablePapers[choice] = False 
+	originalPapers.remove(shufflePapers[choice - 1])
+	 
+
+
+def printUsersChoice(choice):
+	print()
+	print() 
+	print("The paper you chose had a grade of " + str(shufflePapers[int(choice) - 1]) + "%")
+	print()
+	print()
+
 #2) Loop the program where it eliminates 2 grades at a time and then checks with "teacher"
 
 #If offer is accepted, game is over. Otherwise, continue the game
 gameIsOver = False
 decr = 10
-while (gameIsOver == False) and (len(shufflePapers) > 1):
+roundCount = 1
+while (gameIsOver == False) and (len(originalPapers) != 2): 
 	showAvailableGrades()
 	showAvailableCases()
-	print("You will eliminate 2 'papers' at a time")
-	choice1 = input("Choose the 1st paper to eliminate: ")
-	while (choice1.isnumeric() == False) or (int(choice1) > 11) or (int(choice1) < 1) or (availablePapers[int(choice1)] == False):
-		if (choice1.isnumeric() == False) or (int(choice1) > 11) or (int(choice1) < 1):
-			choice1 = input("Sorry, that's not a valid response. Please choose another: ")
-		else:
-			choice1 = input("Sorry, that paper was already eliminated. Please choose another: ")
-	choice1 = int(choice1)
-	availablePapers[choice1] = False 
-	originalPapers.remove(shufflePapers[choice1 - 1])
+	if (roundCount == 1) and (len(originalPapers) == 3):
+		print("You are down to the last 2 'papers'. You will only pick one this round before you look at your personal paper.")
+		userChoice = input("Which paper do you choose: ")
+		#roundCount = 2
+	elif roundCount == 1:
+		print("You will eliminate 2 'papers' at a time")
+		userChoice = input("Choose the 1st paper to eliminate: ")
+		roundCount = 2
+	elif roundCount == 2:
+		userChoice = input("Choose the 2nd paper to eliminate: ")
+		roundCount = 1 
+	getUsersChoice(userChoice)
+	printUsersChoice(userChoice)
+	
 
-	print()
-	print()
-	print("The paper you chose had a grade of " + str(shufflePapers[choice1 - 1]) + "%")
-	print()
-	print()
-
-	showAvailableGrades()
-	showAvailableCases()
-	choice2 = input("Choose the 2nd paper to eliminate: ")
-	while (choice2.isnumeric() == False) or (int(choice2) > 11) or (int(choice2) < 1) or (availablePapers[int(choice2)] == False):
-		if (choice2.isnumeric() == False) or (int(choice2) > 11) or (int(choice2) < 1):
-			choice2 = input("Sorry, that's not a valid response. Please choose another: ")
-		else:
-			choice2 = input("Sorry, that paper was already eliminated. Please choose another: ")
-	choice2 = int(choice2)
-	availablePapers[choice2] = False 
-	originalPapers.remove(shufflePapers[choice2 - 1])
-
-	print()
-	print()
-	print("The paper you chose had a grade of " + str(shufflePapers[choice2 - 1]) + "%") 
-	print()
-	print()
-
-	if len(shufflePapers) != 1:
-		
+	if (len(originalPapers) != 2) and (roundCount == 1):
 		teacherOffer = callTeacher(decr)
 		decr = decr - 3.7
 		print("Hang On. The teacher wants to offer you " + str(teacherOffer) + "%")
 		showAvailableGrades()
-		choice3 = input("So.....Grade or No Grade: ")
-		if (choice3.lower() == 'grade') or (choice3.lower() == 'no') or (choice3.lower() == 'no grade'):
-			gameIsOver = checkIfAccept(choice3.lower())
+		choice = input("So.....Grade or No Grade: ")
+		if (choice.lower() == 'grade') or (choice.lower() == 'no') or (choice.lower() == 'no grade'):
+			gameIsOver = checkIfAccept(choice.lower())
 		else:
-			choice3 = input("Sorry, I didn't understand that.....Grade or No Grade: ")
+			choice = input("Sorry, I didn't understand that.....Grade or No Grade: ")
 
 
 #Two cases
@@ -128,7 +127,7 @@ if(gameIsOver == True):
 	print("Congrats, your final grade is " + str(teacherOffer) + "%") 
 else:
 	print("It seems you have now reached the last case so go ahead and look at the personal grade you picked in the beginning")
-	print("Congrats, your final grade choice was  " + str(personalCase))
+	print("Congrats, your personal grade was " + str(personalCase) + "%")
 
 
 
