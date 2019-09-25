@@ -1,4 +1,4 @@
-# GradeOrNoGrade Terminal
+# GradeOrNoGrade
 
 "Deal or No Deal" with a college twist where students are trying to get the highest grade possible. Students will eliminate possible letter grades at each turn while also given the chance to accept or deny sporadic teacher offers.
 
